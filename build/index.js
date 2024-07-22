@@ -4,7 +4,9 @@ function GetItem(key) {
         console.log("There is no such item in localstorage");
         return;
     }
-    return localStorage.getItem(key);
+    let value = localStorage.getItem(key);
+    if (value && (value[0] == "[" || value[0] == "{"))
+        return JSON.parse(value);
 }
 function SetItem(key, value) {
     if (localStorage.getItem(key)) {
@@ -12,7 +14,7 @@ function SetItem(key, value) {
         return;
     }
     if (typeof value != "string")
-        value = value.toString();
+        value = JSON.stringify(value);
     localStorage.setItem(key, value);
     return;
 }
@@ -27,16 +29,16 @@ function RemoveItem(key) {
     }
     return;
 }
-function ClearAll() {
+function clearAll() {
     localStorage.clear();
     return;
 }
-// SetItem("element", 232);
+SetItem("elem", [1, 2, 3, 4, 5]);
 // SetItem("number", 232);
 // RemoveItem("element");
 // for(let i = 0; i < 20; i++) {
 //     SetItem(i.toString(), i);
 // }
-// console.log(GetItem("2"))
-// ClearAll();
+console.log(GetItem("elem"));
+9;
 RemoveItem("2");

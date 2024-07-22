@@ -6,7 +6,10 @@ function GetItem (key: string) : any {
         return;
     }
 
-    return localStorage.getItem(key);
+    let value : string | null = localStorage.getItem(key);
+
+    if (value && ( value[0] == "[" || value[0] == "{")) return JSON.parse(value);  
+
 }
 
 function SetItem (key: string, value: any) : void {
@@ -16,7 +19,7 @@ function SetItem (key: string, value: any) : void {
     }
 
     if (typeof value != "string") 
-        value = value.toString();
+        value = JSON.stringify(value);
 
     localStorage.setItem(key, value);
 
@@ -38,13 +41,13 @@ function RemoveItem(key: string) : void {
     return;
 }
 
-function ClearAll() : void {
+function clearAll() : void {
     localStorage.clear();
     return ;
 }
 
 
-// SetItem("element", 232);
+SetItem("elem", [1,2,3,4,5]);
 // SetItem("number", 232);
 
 // RemoveItem("element");
@@ -53,8 +56,7 @@ function ClearAll() : void {
 //     SetItem(i.toString(), i);
 // }
 
-// console.log(GetItem("2"))
+console.log(GetItem("elem"))
 
-// ClearAll();
-
+9
 RemoveItem("2")
